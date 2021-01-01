@@ -1,0 +1,24 @@
+import { Meta, Preview, Props, Story } from '@storybook/addon-docs/blocks';
+import { text } from '@storybook/addon-knobs';
+
+import Link from './index';
+import knobData from './link.knobs.json';
+const { link_text } = knobData;
+
+<Meta title="Atoms/Link" component={Link} />
+
+# Link
+
+The `<Link>` component is responsible for rendering a consistent front-end interface for anchor and link elements.
+
+By default, the `<Link>` component will render a HTML standard `<link>` element unless provided a value for the `href` prop.
+
+<Props of={Link} />
+
+## Link
+
+<Preview>
+  <Story name="Basic Link">
+    <Link>{text(...Object.values(link_text))}</Link>
+  </Story>
+</Preview>

@@ -1,0 +1,37 @@
+import { Meta, Preview, Props, Story } from '@storybook/addon-docs/blocks';
+import { text } from '@storybook/addon-knobs';
+
+import Error from './index';
+import knobData from './error.knobs.json';
+const { children, title } = knobData;
+
+<Meta title="Molecules/Error" component={Error} />
+
+# Error
+
+The `<Error>` React Component is responsible for relaying any error messages back to the user of an interface.
+
+The `<Error>` Component can do this in two ways, by providing an error as a prop, great for when handling direct API responses.
+Alternatively you can insert a message within the 'child(ren)' of the component.
+
+The component also accepts a 'title' prop to help give a summary of the message, e.g. 'Failed API response'.
+
+All this information can then be used to provide feedback to the user about the error.
+
+<Props of={Error} />
+
+## Simple
+
+<Preview>
+  <Story name="Simple">
+    <Error title={text(...Object.values(title))}>{text(...Object.values(children))}</Error>
+  </Story>
+</Preview>
+
+## Error Prop
+
+<Preview>
+  <Story name="Error Prop">
+    <Error error={text(...Object.values(children))} title={text(...Object.values(title))} />
+  </Story>
+</Preview>
