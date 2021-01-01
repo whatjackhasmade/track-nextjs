@@ -22,7 +22,7 @@
     "skipLibCheck": true,
     "strict": false,
     "target": "es5",
-    "types": ["node", "react", "react-youtube"]
+    "types": ["node", "react"]
   },
   "exclude": ["node_modules"],
   "include": ["src", "index.d.ts"]
