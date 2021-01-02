@@ -1,7 +1,9 @@
-import dayjs from 'dayjs';
-
 import CollectionComponent from './collection.styles';
 
+import { Badge } from 'track';
+import { Link } from 'track';
+
+import { Card } from 'track';
 import { Error } from 'track';
 
 declare type CollectionProps = {
@@ -24,31 +26,36 @@ export const Collection: React.FC<CollectionProps> = (props: CollectionProps) =>
           {title && <h2 className="collection__title">{title}</h2>}
           {loading && <p>Loading...</p>}
           {error && <Error error={error} />}
-          <ul className="collection__items">
+          <div className="collection__items">
             {hasItems &&
               items.map(item => {
-                const { id, labels, link, title, updatedAt } = item;
+                const { id, artists, bandcamp, discogsID, labels, title, url } = item;
 
                 const key = id;
 
                 let heading = title;
                 if (labels) heading += ` - ${labels}`;
 
-                const date = dayjs(updatedAt).format(`MMM D, YYYY h:mm A`); // display
+                const href = `/wishlist/` + discogsID;
 
                 return (
-                  <li className="collection__item" key={key}>
-                    {link && (
-                      <a href={link} rel="noreferrer noopener" target="_blank">
-                        {heading}
+                  <Card className="collection__item" key={key}>
+                    {url && (
+                      <a href={url} rel="noreferrer noopener" target="_blank">
+                        <h3>{heading}</h3>
                       </a>
                     )}
-                    {!link && <span>{heading}</span>}
-                    {date && <time>Updated at {date}</time>}
-                  </li>
+                    {!url && <h3>{heading}</h3>}
+                    <div className="badge-group">
+                      {artists && <Badge>{artists}</Badge>}
+                      {bandcamp && <Badge>{bandcamp}</Badge>}
+                      {discogsID && <Badge>{discogsID}</Badge>}
+                    </div>
+                    <Link href={href}>View Item</Link>
+                  </Card>
                 );
               })}
-          </ul>
+          </div>
         </div>
       </div>
     </CollectionComponent>

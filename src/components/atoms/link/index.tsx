@@ -13,34 +13,25 @@ declare type LinkProps = {
 };
 
 const Link = (props: LinkProps) => {
-  const { as, children, className, href, onClick, target, to } = props;
+  const { children, className, href, onClick, to } = props;
   const goto = href ? href : to ? to : `#`;
   const url = goto;
 
   const { asPath } = useRouter();
 
   let isActive = null;
-  const isNext = props.as && goto;
 
-  if (isNext) {
-    const comparison = asPath + `/`;
-    const toggleActive = comparison.includes(url);
+  const comparison = asPath + `/`;
+  const toggleActive = comparison.includes(url);
 
-    if (toggleActive) isActive = `page`;
-
-    return (
-      <NextLink href={url}>
-        <a aria-current={isActive} className={className} onClick={onClick}>
-          {children}
-        </a>
-      </NextLink>
-    );
-  }
+  if (toggleActive) isActive = `page`;
 
   return (
-    <a className={className} href={as ? as : url} target={target}>
-      {children}
-    </a>
+    <NextLink href={url}>
+      <a aria-current={isActive} className={className} onClick={onClick}>
+        {children}
+      </a>
+    </NextLink>
   );
 };
 

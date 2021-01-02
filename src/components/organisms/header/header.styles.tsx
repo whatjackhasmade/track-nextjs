@@ -2,18 +2,14 @@ import styled from 'styled-components';
 import { device } from 'particles';
 
 const HeaderComponent = styled.header`
-  min-height: 100px;
   padding: 32px 0 16px;
-  position: absolute;
-  left: 0;
-  top: 0;
   width: 100%;
 
   background-color: transparent;
-  color: var(--white);
+  color: var(--black);
 
   a {
-    color: var(--white);
+    color: var(--black);
   }
 
   button {

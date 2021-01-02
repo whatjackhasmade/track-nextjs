@@ -2,7 +2,6 @@ import * as React from 'react';
 import { useQuery } from 'react-query';
 
 // Particles
-import { callGetPosts } from 'track';
 import { callGetWishlist } from 'track';
 
 // Organisms
@@ -14,18 +13,10 @@ import { Page } from 'track';
 const NodePage = context => {
   return (
     <Page {...context}>
-      <h1 className="hidden">Homepage</h1>
-      <AllPosts />
+      <h1 className="hidden">Wishlist</h1>
       <AllWishlist />
     </Page>
   );
-};
-
-const AllPosts = () => {
-  const { data: res, error, isLoading: loading } = useQuery(`callGetPosts`, callGetPosts);
-  const items = res?.data;
-
-  return <Collection error={error} items={items} loading={loading} title="Posts found on Reddit" />;
 };
 
 const AllWishlist = () => {

@@ -2,14 +2,11 @@ import styled from 'styled-components';
 import { device } from 'particles';
 
 const FooterComponent = styled.footer`
-  bottom: 0;
   padding: 24px 0;
-  position: fixed;
-  left: 0;
   width: 100%;
 
   background-color: transparent;
-  color: var(--white);
+  color: var(--black);
   text-align: right;
 
   a {

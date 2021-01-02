@@ -25,8 +25,7 @@ import mailtoui from './css/components/mailtoui';
 import slick from './css/components/slick';
 import wrapper from './css/components/wrapper';
 
-import wpImage from './css/components/wordpress/image';
-import wpYouTube from './css/components/wordpress/youtube';
+import badgeGroup from './css/components/badge-group';
 
 import hide from './css/utilities/hide';
 
@@ -57,8 +56,7 @@ const GlobalStyle = createGlobalStyle`
 	${slick};
 	${wrapper};
 
-	${wpImage};
-	${wpYouTube};
+	${badgeGroup};
 
 	${hide};
 `;

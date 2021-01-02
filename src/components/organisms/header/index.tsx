@@ -20,11 +20,11 @@ const Header: React.FC = props => {
             TrackTheRecords
           </Link>
           <nav>
-            <Link to="/reddit" className="header__item">
-              Reddit
+            <Link to="/posts" className="header__item">
+              Reddit Posts
             </Link>
-            <Link to="/wantlist" className="header__item">
-              Wantlist
+            <Link to="/wishlist" className="header__item">
+              Wishlist
             </Link>
             <button onClick={handleClick}>
               <span className="hidden">{menuOpen ? `Close` : `Open`} Menu Navigation</span>
