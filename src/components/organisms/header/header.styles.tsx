@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { device } from 'particles';
 
 const HeaderComponent = styled.header`
+  margin-bottom: 48px;
   padding: 32px 0 16px;
   width: 100%;
 
@@ -56,7 +57,7 @@ const HeaderComponent = styled.header`
     &:focus-within,
     &:hover {
       text-decoration: none;
-      transform: rotate(-1.5deg);
+      transform: rotate(-0.5deg);
     }
   }
 `;

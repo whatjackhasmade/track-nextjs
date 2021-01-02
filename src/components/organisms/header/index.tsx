@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Container, Row, Col } from 'react-grid-system';
 
 import { Link } from 'track';
 
@@ -14,24 +15,28 @@ const Header: React.FC = props => {
 
   return (
     <HeaderComponent>
-      <div className="grid">
-        <div className="header__contents">
-          <Link to="/" className="header__logo">
-            TrackTheRecords
-          </Link>
-          <nav>
-            <Link to="/posts" className="header__item">
-              Reddit Posts
-            </Link>
-            <Link to="/wishlist" className="header__item">
-              Wishlist
-            </Link>
-            <button onClick={handleClick}>
-              <span className="hidden">{menuOpen ? `Close` : `Open`} Menu Navigation</span>
-            </button>
-          </nav>
-        </div>
-      </div>
+      <Container>
+        <Row>
+          <Col>
+            <div className="header__contents">
+              <Link to="/" className="header__logo">
+                TrackTheRecords
+              </Link>
+              <nav>
+                <Link to="/posts" className="header__item">
+                  Reddit Posts
+                </Link>
+                <Link to="/wishlist" className="header__item">
+                  Wishlist
+                </Link>
+                <button onClick={handleClick}>
+                  <span className="hidden">{menuOpen ? `Close` : `Open`} Menu Navigation</span>
+                </button>
+              </nav>
+            </div>
+          </Col>
+        </Row>
+      </Container>
     </HeaderComponent>
   );
 };

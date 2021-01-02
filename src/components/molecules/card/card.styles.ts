@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 import { device } from 'particles';
 
+import { ButtonMixin } from 'atoms';
+
 const StyledCard = styled.div`
   --box-ring-inset: var(--box-empty);
   --box-ring-offset-width: 0px;
@@ -11,6 +13,7 @@ const StyledCard = styled.div`
 
   --box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 
+  align-items: flex-start;
   border-radius: 4px;
   display: flex;
   flex-direction: column;
@@ -24,6 +27,8 @@ const StyledCard = styled.div`
     color: inherit;
     text-decoration: none;
 
+    ${ButtonMixin};
+
     &:active,
     &:focus,
     &:focus-within,
@@ -33,8 +38,11 @@ const StyledCard = styled.div`
   }
 
   a:last-of-type {
-    display: flex;
+    ${ButtonMixin};
+
+    display: inline-flex;
     margin-top: auto;
+    width: auto;
   }
 
   h3 {
@@ -49,6 +57,10 @@ const StyledCard = styled.div`
 
   time:last-of-type {
     margin-bottom: 16px;
+  }
+
+  .badge-group {
+    margin-bottom: 32px;
   }
 `;
 

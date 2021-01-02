@@ -19,7 +19,7 @@ const input = css`
     border-radius: 2px;
     display: block;
     min-height: 48px;
-    padding: var(--spacingSmall);
+    padding: 8px;
     position: relative;
     width: 100%;
 

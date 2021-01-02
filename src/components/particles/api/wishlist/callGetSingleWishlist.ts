@@ -2,11 +2,11 @@ import { fetchAPI } from 'particles';
 
 type GetSingleWishlistParamaters = {};
 
-export const callGetWishlist = async (parameters: GetSingleWishlistParamaters) => {
+export const callGetSingleWishlist = async (parameters: GetSingleWishlistParamaters) => {
   const response = await fetchAPI({ method: `GET`, parameters, route: `wishlist` });
   const error = response?.error?.message;
   if (error) throw error;
   return response;
 };
 
-export default callGetWishlist;
+export default callGetSingleWishlist;

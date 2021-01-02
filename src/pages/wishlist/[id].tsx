@@ -1,8 +1,11 @@
 /* eslint-disable react/react-in-jsx-scope */
 import { useFormik } from 'formik';
 import { useMutation } from 'react-query';
+import { useQuery } from 'react-query';
+import { useQueryClient } from 'react-query';
+import { Container, Row, Col } from 'react-grid-system';
 
-import { fetchAPI } from 'track';
+import { callGetSingleWishlist } from 'track';
 import { callPutSingleWishlist } from 'track';
 
 import { Badge } from 'track';
@@ -14,62 +17,76 @@ import { Page } from 'track';
 
 export async function getServerSideProps(context) {
   const id: string = context?.query?.id;
-  const data = await fetchAPI({ method: `GET`, parameters: { id }, route: `wishlist` });
-
-  if (!data) {
-    return {
-      notFound: true,
-    };
-  }
 
   return {
     props: {
-      ...data,
+      id,
     },
   };
 }
 
 declare type Props = {
-  data: {
-    artists: string;
-    bandcamp: string;
-    discogsID: string;
-    labels: string;
-    title: string;
-  };
+  artists: string;
+  bandcamp: string;
+  discogsID: string;
+  labels: string;
+  title: string;
+};
+
+export const Wrapper = (props: { id: string }) => {
+  const { id } = props;
+  const { data: res } = useQuery(`callGetSingleWishlist`, () => callGetSingleWishlist({ id }));
+  const data = res?.data;
+
+  if (data) return <WishlistSingle {...data} />;
+  return null;
 };
 
 export const WishlistSingle: React.FC<Props> = (props: Props) => {
-  const { data } = props;
-  const { artists, bandcamp, discogsID, labels, title } = data;
+  const { artists, bandcamp, discogsID, labels, title } = props;
 
   return (
     <Page>
-      <Link href="/wishlist">Wishlist</Link>
-      <h1>{title}</h1>
-      <h2>{artists}</h2>
-      <div className="badge-group">
-        {artists && <Badge>{artists}</Badge>}
-        {bandcamp && <Badge>{bandcamp}</Badge>}
-        {discogsID && <Badge>{discogsID}</Badge>}
-        {labels && <Badge>{labels}</Badge>}
-      </div>
-      <DataForm data={data} />
+      <Container>
+        <Row>
+          <Col sm={6}>
+            {` `}
+            <Link href="/wishlist">Wishlist</Link>
+            <h1>{title}</h1>
+            <h2>{artists}</h2>
+            <div className="badge-group">
+              {artists && <Badge>{artists}</Badge>}
+              {bandcamp && <Badge>{bandcamp}</Badge>}
+              {discogsID && <Badge>{discogsID}</Badge>}
+              {labels && <Badge>{labels}</Badge>}
+            </div>
+          </Col>
+          <Col sm={6}>
+            <DataForm {...props} />
+          </Col>
+        </Row>
+      </Container>
     </Page>
   );
 };
 
 const DataForm: React.FC<Props> = (props: Props) => {
-  const { data } = props;
-  const { artists, bandcamp, discogsID, labels } = data;
+  const { artists, bandcamp, discogsID, labels, title } = props;
+  const queryClient = useQueryClient();
 
-  const { error, isSuccess: success, mutateAsync } = useMutation(callPutSingleWishlist);
+  const { error, isSuccess: success, mutateAsync } = useMutation(callPutSingleWishlist, {
+    // Notice the second argument is the variables object that the `mutate` function receives
+    onSuccess: (data, variables) => {
+      queryClient.setQueryData([`callGetSingleWishlist`, { id: discogsID }], data);
+    },
+  });
 
   const formik = useFormik({
     initialValues: {
       artists,
       bandcamp,
       labels,
+      title,
     },
     onSubmit: async values => await mutateAsync({ id: discogsID, ...values }),
     validate: values => {
@@ -83,7 +100,6 @@ const DataForm: React.FC<Props> = (props: Props) => {
 
   const { handleChange, handleSubmit } = formik;
   const { isSubmitting } = formik;
-
   const { values } = formik;
 
   return (
@@ -91,6 +107,8 @@ const DataForm: React.FC<Props> = (props: Props) => {
       <fieldset aria-busy={isSubmitting} disabled={isSubmitting}>
         {success && <p>Update was successfull</p>}
         {error && <Error error={error} />}
+        <label htmlFor="title">Title</label>
+        <input id="title" name="title" type="text" onChange={handleChange} value={values.title} />
         <label htmlFor="artists">Artists</label>
         <input id="artists" name="artists" type="text" onChange={handleChange} value={values.artists} />
         <label htmlFor="bandcamp">Bandcamp</label>
@@ -103,4 +121,4 @@ const DataForm: React.FC<Props> = (props: Props) => {
   );
 };
 
-export default WishlistSingle;
+export default Wrapper;

@@ -12,6 +12,7 @@ import article from './css/base/article';
 import body from './css/base/body';
 import button from './css/base/button';
 import code from './css/base/code';
+import form from './css/base/form';
 import heading from './css/base/heading';
 import html from './css/base/html';
 import image from './css/base/image';
@@ -43,6 +44,7 @@ const GlobalStyle = createGlobalStyle`
 	${body};
 	${button};
 	${code};
+	${form};
 	${heading};
 	${html};
 	${input};
