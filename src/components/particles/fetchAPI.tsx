@@ -22,6 +22,23 @@ const handlePOST = async ({ fetchOptions, parameters, url }) => {
   return response;
 };
 
+const handlePUT = async ({ fetchOptions, parameters, url }) => {
+  // Attached appended string if defined
+  const id = parameters?.id;
+  if (id) {
+    url = url + `/` + id;
+    delete parameters.id;
+  }
+
+  const body = JSON.stringify(parameters);
+  fetchOptions.body = body;
+
+  // Call the fetch function and parse as JSON
+  const request = await fetch(url, fetchOptions);
+  const response = await request.json();
+  return response;
+};
+
 type RequestMethod = 'GET' | 'HEAD' | 'POST' | 'PUT' | 'DELETE' | 'CONNECT' | 'OPTIONS' | 'TRACE' | 'PATCH';
 
 declare type fetchAPIArgs = {
@@ -58,6 +75,9 @@ export const fetchAPI = async (args: fetchAPIArgs) => {
       break;
     case `POST`:
       response = await handlePOST({ fetchOptions, parameters, url });
+      break;
+    case `PUT`:
+      response = await handlePUT({ fetchOptions, parameters, url });
       break;
     default:
       response = await handleGET({ fetchOptions, parameters, url });
