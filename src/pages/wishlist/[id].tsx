@@ -5,6 +5,7 @@ import { useQuery } from 'react-query';
 import { useQueryClient } from 'react-query';
 import { Container, Row, Col } from 'react-grid-system';
 
+import { callGetArtistReleases } from 'track';
 import { callGetSingleWishlist } from 'track';
 import { callPutSingleWishlist } from 'track';
 
@@ -45,6 +46,10 @@ export const Wrapper = (props: { id: string }) => {
 export const WishlistSingle: React.FC<Props> = (props: Props) => {
   const { artists, bandcamp, discogsID, labels, title } = props;
 
+  const { data: res } = useQuery(`callGetArtistReleases`, () => callGetArtistReleases({ id: discogsID }));
+  const data = res?.data;
+  const hasData = data?.length > 0;
+
   return (
     <Page>
       <Container>
@@ -60,6 +65,23 @@ export const WishlistSingle: React.FC<Props> = (props: Props) => {
               {discogsID && <Badge>{discogsID}</Badge>}
               {labels && <Badge>{labels}</Badge>}
             </div>
+            {hasData && (
+              <div>
+                <h3>Artist Releases on Bandcamp</h3>
+                <ul>
+                  {data.map(record => {
+                    const { url } = record;
+                    return (
+                      <li key={url}>
+                        <a href={url} rel="noreferrer noopener" target="_blank">
+                          {url}
+                        </a>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
+            )}
           </Col>
           <Col sm={6}>
             <DataForm {...props} />

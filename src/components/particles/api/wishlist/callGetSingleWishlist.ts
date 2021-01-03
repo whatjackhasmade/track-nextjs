@@ -1,6 +1,8 @@
 import { fetchAPI } from 'particles';
 
-type GetSingleWishlistParamaters = {};
+type GetSingleWishlistParamaters = {
+  id: string;
+};
 
 export const callGetSingleWishlist = async (parameters: GetSingleWishlistParamaters) => {
   const response = await fetchAPI({ method: `GET`, parameters, route: `wishlist` });
